@@ -1,0 +1,15 @@
+# virtual environment and caches
+.venv/
+__pycache__/
+*.pyc
+
+# secrets: never commit API keys
+.env
+*.key
+
+# local outputs and data
+*.xlsx
+*.csv
+chroma_db/
+.chroma/
+.DS_Store
