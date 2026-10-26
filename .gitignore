@@ -12,4 +12,7 @@ __pycache__/
 *.csv
 chroma_db/
 .chroma/
-.DS_Store
+.DS_Storechroma_db/
+chroma_test/
+chroma_test_review/
+chroma_db/

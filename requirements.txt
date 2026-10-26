@@ -3,3 +3,6 @@ langchain-core
 langgraph
 langchain-ollama
 pydantic
+langchain-chroma
+langchain-ollama
+gradio
