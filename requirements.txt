@@ -6,3 +6,4 @@ pydantic
 langchain-chroma
 langchain-ollama
 gradio
+python-dotenv

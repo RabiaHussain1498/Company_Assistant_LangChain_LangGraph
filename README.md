@@ -25,33 +25,54 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
+## Environment variables
+
+Create a `.env` file in the project root (it is already in `.gitignore`):
+
+```env
+# --- Model ---
+LLM_MODEL=ollama:qwen2.5:3b
+
+# --- Fetcher ---
+CRAWLER_USER_AGENT="CompanyAssistantLearning/0.1 (contact: your-email)"
+
+# --- LangSmith tracing (optional but recommended) ---
+LANGCHAIN_TRACING_V2=true
+LANGSMITH_API_KEY=your-langsmith-api-key
+LANGSMITH_PROJECT=company-assistant
+```
+
+`load_dotenv()` is called at the top of `step3_graph.py` (before any other import), so all scripts that import from it — including `app.py` — will pick up the file automatically.
+
 ## Choose a model
 
-The model is chosen with the `LLM_MODEL` environment variable (`provider:model`):
+The model is chosen with the `LLM_MODEL` variable (`provider:model`):
 
 ```bash
 # local and free (install Ollama first)
 ollama pull qwen2.5:3b
-export LLM_MODEL="ollama:qwen2.5:3b"
+# then set in .env:  LLM_MODEL=ollama:qwen2.5:3b
 
-# or a cloud model (needs an API key in your environment)
-export LLM_MODEL="anthropic:claude-sonnet-5-5"
-export ANTHROPIC_API_KEY="..."
+# or a cloud model (needs the matching API key)
+# LLM_MODEL=anthropic:claude-3-5-sonnet-20241022
+# ANTHROPIC_API_KEY=...
 ```
 
-## Fetcher user agent
+## LangSmith tracing
 
-The fetcher (`cookie_patch.py`) reads its user agent from an environment variable:
+Sign up at [smith.langchain.com](https://smith.langchain.com), create a project, and copy your API key into `.env`:
 
-```bash
-export CRAWLER_USER_AGENT="CompanyAssistantLearning/0.1 (contact: your-email)"
+```env
+LANGCHAIN_TRACING_V2=true
+LANGSMITH_API_KEY=lsv2_pt_...
+LANGSMITH_PROJECT=your-project-name
 ```
+
+Every run of `app.py` (or any step script) will then send traces to your LangSmith dashboard automatically.
 
 ## Run
 
 ```bash
-python step1_intent.py     # first chain and structured output
-python step1b_eval.py      # compare prompt versions on a labeled test set
 python step1c_holdout.py   # test the final classifier (intent.py) on unseen messages
 python step2_tool.py       # fetch_page tool: direct call, tool schema, tool call, agent
 python step3_graph.py      # LangGraph: routing + retry loop (real sites)

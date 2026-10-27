@@ -24,6 +24,13 @@ Two compiled versions of the SAME graph are exported:
   graph         - no memory, never pauses (state["review"] is ignored by design of the tests)
   review_graph  - has a checkpointer, so it CAN pause and be resumed (needs a thread_id)
 """
+# Load settings from a .env file (LLM_MODEL, CRAWLER_USER_AGENT, LANGSMITH_*, ...).
+# This must run BEFORE the project imports below, because some of them read environment
+# variables when they are imported. Variables already set in the terminal win over .env.
+from dotenv import load_dotenv
+
+load_dotenv()
+
 import re
 import time
 from typing import Optional, TypedDict

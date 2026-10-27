@@ -16,3 +16,4 @@ chroma_db/
 chroma_test/
 chroma_test_review/
 chroma_db/
+.env
